@@ -32,7 +32,11 @@ jobs:
         TIME=$(TZ='Asia/Shanghai' date +'%y%m%d %H:%M')
         echo "TIME=$TIME" >> $GITHUB_ENV
 
-        TAG=$(curl -s "${{ env.API_U }}/releases/latest" | jq -r '.tag_name')
+        TAG=$(curl -s "${{ env.API_U }}/releases" | jq -r '.[0].tag_name')
+        echo "::notice::Fetched TAG is ${TAG}."
+        if [[ -z "$TAG" || "$TAG" == "null" ]]; then
+          exit 1
+        fi
         echo "TAG=$TAG" >> $GITHUB_ENV
 
         SKIP='!1'
@@ -73,6 +77,7 @@ jobs:
         git commit -m "${{env.TAG}} | ${{env.TIME}}"
 
     - name: Update README.md
+      if: env.SKIP == '!1'
       run: |
         TEMP_FILE="${{env.TAG}}.txt"
         printf '
@@ -86,6 +91,8 @@ jobs:
         cat $TEMP_FILE README.md > combined.md
         mv combined.md README.md
 
+    - name: Commit last check
+      run: |
         git add README.md
         git commit -m "Last check: ${{env.TIME}}"
 
