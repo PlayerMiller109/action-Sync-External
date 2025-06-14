@@ -1,4 +1,8 @@
 
+Sync [zsviczian/obsidian-excalidraw-plugin](https://github.com/zsviczian/obsidian-excalidraw-plugin/releases) and add local zh-cn.ts translation for example.
+
+<a href="https://github.com/PlayerMiller109/action-Sync-External/releases/download/2.12.2/obsidian-excalidraw-plugin.zip" download="obsidian-excalidraw-plugin.zip">Click to trigger download (2.12.2)</a>
+
 ---
 
 ## 绘图 = drawing
